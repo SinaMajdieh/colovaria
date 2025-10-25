@@ -1,0 +1,14 @@
+# Godot 4+ specific ignores
+.import/
+.export/
+*.tmp
+*.log
+*.bin
+*.exe
+*.dll
+*.pdb
+*.cache
+*.mono/
+*.godot/
+.editorconfig
+.vscode/

@@ -1,0 +1,26 @@
+[gd_scene load_steps=2 format=3 uid="uid://bs5xvexrfyvyl"]
+
+[ext_resource type="Script" uid="uid://b3fs85cvckg2" path="res://unit_tests/test_pixel_rearranger/test_pixel_rearranger.gd" id="1_p6to4"]
+
+[node name="TestPixelRearranger" type="Control" node_paths=PackedStringArray("texture_rect")]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_p6to4")
+source_path = "uid://8cmosdm1ov1b"
+target_path = "uid://bj2it6ge4dx8y"
+texture_rect = NodePath("TextureRect")
+
+[node name="TextureRect" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+grow_horizontal = 2
+grow_vertical = 2
+stretch_mode = 5
