@@ -1,12 +1,15 @@
 class_name PixelRearranger
 extends RefCounted
 
+var source_pixels: PixelCollection = null
+var target_pixels: PixelCollection = null
+
 # === Public API ===
 
 ## Main entry point
 ## Rearranges source pixels to match target pixels
 func rearrange(source: Image, target: Image) -> Image:
-	if not _are_images_valid(source, target):
+	if not are_images_valid(source, target):
 		push_error("PixelRearranger: Invalid images provided.")
 		return null
 	
@@ -16,21 +19,21 @@ func rearrange(source: Image, target: Image) -> Image:
 	print("\tTarget size: %v" % target.get_size())
 
 	# Extract pixels
-	var source_pixels: PixelCollection = PixelCollection.extract_pixels(source)
-	var target_pixels: PixelCollection = PixelCollection.extract_pixels(target)
+	source_pixels = PixelCollection.extract_pixels(source)
+	target_pixels = PixelCollection.extract_pixels(target)
 
 	# Sort by brightness
 	sort_by_brightness(source_pixels)
 	sort_by_brightness(target_pixels)
 
-	var result: Image = _build_result_image(source_pixels, target_pixels, target.get_size())
+	var result: Image = _build_result_image(target.get_size())
 
 	return result
 
 # === Private helpers ===
 
 ## Validates that both images exist and contains data
-func _are_images_valid(source: Image, target: Image) -> bool:
+static func are_images_valid(source: Image, target: Image) -> bool:
 	if source == null or target == null:
 		return false
 	if source.is_empty() or target.is_empty():
@@ -90,7 +93,7 @@ func _render_by_indices(collection: PixelCollection, indices: PackedInt32Array) 
 	collection.positions = new_position
 	collection.brightness = new_brightness
 
-func _build_result_image(source_pixels: PixelCollection, target_pixels: PixelCollection, target_size: Vector2i) -> Image:
+func _build_result_image(target_size: Vector2i) -> Image:
 	print_rich("[color=cyan]Building result image ...")
 	var start_time: int = Time.get_ticks_msec()
 
