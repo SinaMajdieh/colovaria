@@ -37,33 +37,39 @@ func _are_images_valid(source: Image, target: Image) -> bool:
 		return false
 	return true
 
-## Sorts pixel collection by brightness using indices 
+## Sorts pixel collection by brightness using counting sort (O(n) complexity)
+
 func sort_by_brightness(collection: PixelCollection) -> void:
 	print_rich("[color=cyan]Sorting %d pixels by brightness ..." % collection.size())
 	var start_time: int = Time.get_ticks_msec()
 
-	var sortable: Array[Array] = []
-	sortable.resize(collection.size())
+	# Converts brightness to integers (0-255 range for counting sort)
+	var brightness_ints: PackedInt32Array = PackedInt32Array()
+	brightness_ints.resize(collection.size())
 	for i: int in range(collection.size()):
-		sortable.set(i, [collection.brightness.get(i), i])
+		brightness_ints.set(i, int(collection.brightness.get(i) * 255.0))
 	
-	sortable.sort_custom(func(a, b): return a[0] < b[0])
+	var counts: PackedInt32Array = PackedInt32Array()
+	counts.resize(256)  # 0-255 brightness level
+	counts.fill(0)
 
-	var indices: PackedInt32Array = PackedInt32Array()
-	indices.resize(collection.size())
-	indices.resize(collection.size())
-	for i: int in range(collection.size()):
-		indices.set(i, sortable.get(i)[1])
+	for value: int in brightness_ints:
+		counts.set(value, counts.get(value) + 1)
+	
+	for i: int in range(1, 256):
+		counts.set(i, counts.get(i) + counts.get(i - 1))
+	
+	var sorted_indices: PackedInt32Array = PackedInt32Array()
+	sorted_indices.resize(collection.size())
+	for i: int in range(collection.size() - 1, -1, -1):
+		var value: int = brightness_ints.get(i)
+		counts.set(value, counts.get(value) - 1)
+		sorted_indices.set(counts.get(value), i)
 
-	_render_by_indices(collection, indices)
+	_render_by_indices(collection, sorted_indices)
 
 	var elapsed: int = Time.get_ticks_msec() - start_time
 	print_rich("\t[color=green]Sorting took %d ms" % elapsed)
-
-func _swap_indices(indices: PackedInt32Array, i: int, j: int) -> void:
-	var temp: int = indices.get(i)
-	indices.set(i, indices.get(j))
-	indices.set(j, temp)
 
 func _render_by_indices(collection: PixelCollection, indices: PackedInt32Array) -> void:
 	var new_color: PackedColorArray = PackedColorArray()
