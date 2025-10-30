@@ -3,13 +3,14 @@ class_name PixelCollection
 var colors: PackedColorArray
 var positions: PackedVector2Array
 var brightness: PackedFloat32Array
-var count: int
+var count: int :
+    get = size
 
-func _init(size: int) -> void:
-    count = size
-    colors.resize(size)
-    positions.resize(size)
-    brightness.resize(size)
+func _init(size_: int) -> void:
+    count = size_
+    colors.resize(size_)
+    positions.resize(size_)
+    brightness.resize(size_)
 
 static func calculate_brightness(c: Color) -> float:
     # Luminance Formula 0.299R + 0.578G + 0.114B
@@ -17,10 +18,10 @@ static func calculate_brightness(c: Color) -> float:
 
 ## Extract all pixels from an image into a collection of packed arrays
 static func extract_pixels(image: Image) -> PixelCollection:
-    var size: Vector2i = image.get_size()
-    var total_pixels: int = size.x * size.y
+    var image_size: Vector2i = image.get_size()
+    var total_pixels: int = image_size.x * image_size.y
 
-    print("Extracting %d Pixels ..." % total_pixels)
+    print_rich("[color=cyan]Extracting %d Pixels ..." % total_pixels)
     var start_time: int = Time.get_ticks_msec()
 
     var collection: PixelCollection = PixelCollection.new(total_pixels)
@@ -31,9 +32,9 @@ static func extract_pixels(image: Image) -> PixelCollection:
     var data: PackedByteArray = image.get_data()
 
     var pixel_index: int = 0
-    for y: int in range(size.y):
-        for x: int in range(size.x):
-            var byte_index: int = (y * size.x + x) * 4  # 4 bytes per RGBA pixel
+    for y: int in range(image_size.y):
+        for x: int in range(image_size.x):
+            var byte_index: int = (y * image_size.x + x) * 4  # 4 bytes per RGBA pixel
             var r: float = data[byte_index] / 255.0
             var g: float = data[byte_index + 1] / 255.0
             var b: float = data[byte_index + 2] / 255.0
@@ -46,5 +47,8 @@ static func extract_pixels(image: Image) -> PixelCollection:
             pixel_index += 1
     
     var elapsed: int = Time.get_ticks_msec() - start_time
-    print("Extraction took %d ms (%.2f Mpixels/sec)" % [elapsed, float(total_pixels) / elapsed * 0.001])
+    print_rich("\t[color=green]Extraction took %d ms (%.2f Mpixels/sec)" % [elapsed, float(total_pixels) / elapsed * 0.001])
     return collection
+
+func size() -> int:
+    return count
