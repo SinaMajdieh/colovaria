@@ -15,6 +15,12 @@ func rearrange(source: Image, target: Image) -> Image:
     print("\tSource size: %v" % source.get_size())
     print("\tTarget size: %v" % target.get_size())
 
+    # Extract pixels
+    var source_pixels: PixelCollection = PixelCollection.extract_pixels(source)
+    var target_pixels: PixelCollection = PixelCollection.extract_pixels(target)
+    print("Extracted %d source pixels" % source_pixels.count)
+    print("Extracted %d target pixels" % target_pixels.count)
+
     return target.duplicate()   #? Placeholder
 
 # === Private helpers ===
