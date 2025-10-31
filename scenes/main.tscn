@@ -1,0 +1,64 @@
+[gd_scene load_steps=4 format=3 uid="uid://dt3sywi1av33d"]
+
+[ext_resource type="Script" uid="uid://dks1hwxwgcn7c" path="res://scripts/main.gd" id="1_0xm2m"]
+[ext_resource type="Script" uid="uid://blsy78kgtkha1" path="res://scripts/animations/animated_pixel_display.gd" id="1_ig7tw"]
+[ext_resource type="PackedScene" uid="uid://cf70o2n2wtb0w" path="res://scenes/flow_field_panel.tscn" id="3_h2yge"]
+
+[node name="Main" type="PanelContainer" node_paths=PackedStringArray("display", "flow_field_panel", "morph_button")]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_type_variation = &"bg_base"
+script = ExtResource("1_0xm2m")
+source_path = "uid://dv0i33j2tq6l"
+target_path = "uid://br2nbgc016xo5"
+display = NodePath("HBoxContainer/Control/AnimatedPixelDisplay")
+flow_field_panel = NodePath("HBoxContainer/AnimationPanel")
+morph_button = NodePath("HBoxContainer/Control/Morph")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="."]
+layout_mode = 2
+
+[node name="Control" type="Control" parent="HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="AnimatedPixelDisplay" type="TextureRect" parent="HBoxContainer/Control"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+expand_mode = 5
+stretch_mode = 5
+script = ExtResource("1_ig7tw")
+metadata/_custom_type_script = "uid://blsy78kgtkha1"
+
+[node name="Morph" type="Button" parent="HBoxContainer/Control"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -4.0
+offset_top = -4.0
+offset_right = 4.0
+offset_bottom = 4.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_type_variation = &"button_primary"
+text = "Morph"
+
+[node name="AnimationPanel" parent="HBoxContainer" instance=ExtResource("3_h2yge")]
+layout_mode = 2
+size_flags_horizontal = 0
+
+[connection signal="ended" from="HBoxContainer/Control/AnimatedPixelDisplay" to="." method="animation_ended"]
+[connection signal="started" from="HBoxContainer/Control/AnimatedPixelDisplay" to="." method="animation_started"]

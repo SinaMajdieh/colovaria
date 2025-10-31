@@ -4,6 +4,9 @@ extends Control
 @export_file() var target_path: String
 @export var display: AnimatedPixelDisplay
 @export var flow_field_panel: FlowFieldPanel
+@export var morph_button: Button
+
+var rearrange_thread: Thread = null
 
 var rearranger: PixelRearranger = null
 var source: Image = null
@@ -13,7 +16,7 @@ func _connect_signals() -> void:
 	flow_field_panel.animate.connect(animate)
 	display.started.connect(flow_field_panel.disable_button)
 	display.ended.connect(flow_field_panel.enable_button)
-
+	morph_button.pressed.connect(morph)
 
 func _ready() -> void:
 	_connect_signals()
@@ -23,16 +26,24 @@ func _ready() -> void:
 	if not PixelRearranger.are_images_valid(source, target):
 		push_error("Failed to load images")
 		return
-	
+
 	flow_field_panel.set_from_strategy()
 
-	_rearrange()
+func morph() -> void:
+	morph_button.disabled = true
+	morph_button.text = "Morphing ..."
+	rearrange_thread = Thread.new()
+	rearrange_thread.start(_rearrange)
 
 func _rearrange() -> void:
 	rearranger = PixelRearranger.new()
 	rearranger.rearrange(source, target)
+	morph_button.call_deferred("hide")
+
 	
 func animate(strategy: GPUFlowFieldStrategy, duration: float) -> void:
+	if rearranger == null:
+		return
 	var animator: PixelAnimator = PixelAnimator.new(
 		rearranger.source_pixels.positions,
 		rearranger.target_pixels.positions,
