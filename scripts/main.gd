@@ -3,28 +3,43 @@ extends Control
 @export_file() var source_path: String
 @export_file() var target_path: String
 @export var display: AnimatedPixelDisplay
+@export var flow_field_panel: FlowFieldPanel
+
+var rearranger: PixelRearranger = null
+var source: Image = null
+var target: Image = null
+
+func _connect_signals() -> void:
+	flow_field_panel.animate.connect(animate)
+	display.started.connect(flow_field_panel.disable_button)
+	display.ended.connect(flow_field_panel.enable_button)
+
 
 func _ready() -> void:
-    var source: Image = load(source_path).get_image()
-    var target: Image = load(target_path).get_image()
+	_connect_signals()
+	source = load(source_path).get_image()
+	target = load(target_path).get_image()
 
-    if not PixelRearranger.are_images_valid(source, target):
-        push_error("Failed to load images")
-        return
-    
-    var rearranger: PixelRearranger = PixelRearranger.new()
-    rearranger.rearrange(source, target)
+	if not PixelRearranger.are_images_valid(source, target):
+		push_error("Failed to load images")
+		return
+	
+	flow_field_panel.set_from_strategy()
 
-    var animator: PixelAnimator = PixelAnimator.new(
-        rearranger.source_pixels.positions,
-        rearranger.target_pixels.positions,
-        rearranger.source_pixels.colors,
-        source.get_size(),
-        GPUFlowFieldStrategy.new(),
-        15.0
-    )
+	_rearrange()
 
-    #animator.strategy.export_frames_to_directory("user://animation_frames_2")
+func _rearrange() -> void:
+	rearranger = PixelRearranger.new()
+	rearranger.rearrange(source, target)
+	
+func animate(strategy: GPUFlowFieldStrategy, duration: float) -> void:
+	var animator: PixelAnimator = PixelAnimator.new(
+		rearranger.source_pixels.positions,
+		rearranger.target_pixels.positions,
+		rearranger.source_pixels.colors,
+		target.get_size(),
+		strategy,
+		duration
+	)
 
-    display.start_animation(animator)
-
+	display.start_animation(animator)

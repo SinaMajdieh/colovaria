@@ -23,9 +23,9 @@ var particle_count: int
 var is_initialized: bool = false
 
 @export var animation_fps: int = 60
-@export var flow_strength: float = 20.0
-@export var curl_intensity: float = 10.0
-@export var target_pull_strength: float = 0.4
+@export var flow_strength: float = 10.0
+@export var curl_intensity: float = 5.0
+@export var target_pull_strength: float = 0.1
 @export var time_scale: float = 0.3
 
 var animation_time: float = 0.0

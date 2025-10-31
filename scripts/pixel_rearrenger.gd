@@ -13,7 +13,6 @@ func rearrange(source: Image, target: Image) -> Image:
 		push_error("PixelRearranger: Invalid images provided.")
 		return null
 	
-	# TODO: Implementation goes here
 	print("PixelRearranger.rearrange() called")
 	print("\tSource size: %v" % source.get_size())
 	print("\tTarget size: %v" % target.get_size())

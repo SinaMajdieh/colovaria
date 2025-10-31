@@ -1,10 +1,10 @@
-[gd_scene load_steps=3 format=3 uid="uid://dt3sywi1av33d"]
+[gd_scene load_steps=4 format=3 uid="uid://dt3sywi1av33d"]
 
 [ext_resource type="Script" uid="uid://dks1hwxwgcn7c" path="res://scripts/main.gd" id="1_0xm2m"]
 [ext_resource type="Script" uid="uid://blsy78kgtkha1" path="res://scripts/animated_pixel_display.gd" id="1_ig7tw"]
+[ext_resource type="PackedScene" uid="uid://cf70o2n2wtb0w" path="res://flow_field_panel.tscn" id="3_h2yge"]
 
-[node name="Main" type="Control" node_paths=PackedStringArray("display")]
-layout_mode = 3
+[node name="Main" type="PanelContainer" node_paths=PackedStringArray("display", "flow_field_panel")]
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -12,17 +12,27 @@ grow_horizontal = 2
 grow_vertical = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
+theme_type_variation = &"bg_base"
 script = ExtResource("1_0xm2m")
 source_path = "uid://bj2it6ge4dx8y"
 target_path = "uid://8cmosdm1ov1b"
-display = NodePath("AnimatedPixelDisplay")
+display = NodePath("HBoxContainer/AnimatedPixelDisplay")
+flow_field_panel = NodePath("HBoxContainer/AnimationPanel")
 
-[node name="AnimatedPixelDisplay" type="TextureRect" parent="."]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
+[node name="HBoxContainer" type="HBoxContainer" parent="."]
+layout_mode = 2
+
+[node name="AnimatedPixelDisplay" type="TextureRect" parent="HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+expand_mode = 5
+stretch_mode = 5
 script = ExtResource("1_ig7tw")
 metadata/_custom_type_script = "uid://blsy78kgtkha1"
+
+[node name="AnimationPanel" parent="HBoxContainer" instance=ExtResource("3_h2yge")]
+layout_mode = 2
+size_flags_horizontal = 0
+
+[connection signal="ended" from="HBoxContainer/AnimatedPixelDisplay" to="." method="animation_ended"]
+[connection signal="started" from="HBoxContainer/AnimatedPixelDisplay" to="." method="animation_started"]

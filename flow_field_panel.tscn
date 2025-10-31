@@ -1,0 +1,135 @@
+[gd_scene load_steps=2 format=3 uid="uid://cf70o2n2wtb0w"]
+
+[ext_resource type="Script" uid="uid://chs2wxnf6ll76" path="res://scripts/flow_field_panel.gd" id="1_tdgce"]
+
+[node name="FlowFieldPanel" type="PanelContainer" node_paths=PackedStringArray("animation_fps_spin", "flow_strength_spin", "curl_intensity_spin", "target_pull_strength_spin", "time_scale_spin", "animation_duration_spin", "animate_button")]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -142.5
+offset_top = -132.0
+offset_right = 142.5
+offset_bottom = 132.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_type_variation = &"bg_panel"
+script = ExtResource("1_tdgce")
+animation_fps_spin = NodePath("MarginContainer/GridContainer/FPSSpinBox")
+flow_strength_spin = NodePath("MarginContainer/GridContainer/FlowStrengthSpinBox")
+curl_intensity_spin = NodePath("MarginContainer/GridContainer/CurlIntensitySpinBox")
+target_pull_strength_spin = NodePath("MarginContainer/GridContainer/TargetPullStrengthSpinBox")
+time_scale_spin = NodePath("MarginContainer/GridContainer/TimeScaleSpinBox")
+animation_duration_spin = NodePath("MarginContainer/GridContainer/AnimationDurationSpinBox")
+animate_button = NodePath("MarginContainer/GridContainer/Animate")
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+layout_mode = 2
+theme_override_constants/margin_left = 18
+theme_override_constants/margin_top = 18
+theme_override_constants/margin_right = 18
+theme_override_constants/margin_bottom = 18
+
+[node name="GridContainer" type="GridContainer" parent="MarginContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 0
+columns = 2
+
+[node name="FPSLabel" type="Label" parent="MarginContainer/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 0
+theme_type_variation = &"text_primary"
+theme_override_font_sizes/font_size = 18
+text = "FPS"
+vertical_alignment = 1
+
+[node name="FPSSpinBox" type="SpinBox" parent="MarginContainer/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+alignment = 1
+
+[node name="FlowStrengthLabel" type="Label" parent="MarginContainer/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 0
+theme_type_variation = &"text_primary"
+theme_override_font_sizes/font_size = 18
+text = "Flow Strength"
+vertical_alignment = 1
+
+[node name="FlowStrengthSpinBox" type="SpinBox" parent="MarginContainer/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+step = 0.1
+alignment = 1
+
+[node name="CurlIntensityLabel" type="Label" parent="MarginContainer/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 0
+theme_type_variation = &"text_primary"
+theme_override_font_sizes/font_size = 18
+text = "Curl Intensity"
+vertical_alignment = 1
+
+[node name="CurlIntensitySpinBox" type="SpinBox" parent="MarginContainer/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+step = 0.1
+alignment = 1
+
+[node name="TargetPullStrengthLabel" type="Label" parent="MarginContainer/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 0
+theme_type_variation = &"text_primary"
+theme_override_font_sizes/font_size = 18
+text = "Target Pull Strength"
+vertical_alignment = 1
+
+[node name="TargetPullStrengthSpinBox" type="SpinBox" parent="MarginContainer/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+step = 0.1
+alignment = 1
+
+[node name="TimeScaleLabel" type="Label" parent="MarginContainer/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 0
+theme_type_variation = &"text_primary"
+theme_override_font_sizes/font_size = 18
+text = "Time Scale"
+vertical_alignment = 1
+
+[node name="TimeScaleSpinBox" type="SpinBox" parent="MarginContainer/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+step = 0.1
+alignment = 1
+
+[node name="AnimationDurationLabel" type="Label" parent="MarginContainer/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 0
+theme_type_variation = &"text_primary"
+theme_override_font_sizes/font_size = 18
+text = "Duration"
+vertical_alignment = 1
+
+[node name="AnimationDurationSpinBox" type="SpinBox" parent="MarginContainer/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+value = 25.0
+alignment = 1
+
+[node name="Animate" type="Button" parent="MarginContainer/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 0
+theme_type_variation = &"button_primary"
+text = "Animate"
