@@ -3,12 +3,12 @@
 importer="glsl"
 type="RDShaderFile"
 uid="uid://d0udeo850owdc"
-path="res://.godot/imported/flow_field_particles.glsl-bd8c354718ab5792e6a8983af61985b8.res"
+path="res://.godot/imported/flow_field_particles.glsl-875d2999828e88bab9ab28f467b158e2.res"
 
 [deps]
 
-source_file="res://scripts/shaders/flow_field_particles.glsl"
-dest_files=["res://.godot/imported/flow_field_particles.glsl-bd8c354718ab5792e6a8983af61985b8.res"]
+source_file="res://scripts/Shaders/flow_field_particles.glsl"
+dest_files=["res://.godot/imported/flow_field_particles.glsl-875d2999828e88bab9ab28f467b158e2.res"]
 
 [params]
 

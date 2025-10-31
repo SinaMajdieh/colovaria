@@ -10,8 +10,8 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_p6to4")
-source_path = "uid://8cmosdm1ov1b"
-target_path = "uid://bj2it6ge4dx8y"
+source_path = "uid://b5kjxotm7rl73"
+target_path = "uid://bksedx3u0k31s"
 texture_rect = NodePath("TextureRect")
 
 [node name="TextureRect" type="TextureRect" parent="."]
