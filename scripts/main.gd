@@ -20,11 +20,11 @@ func _ready() -> void:
         rearranger.target_pixels.positions,
         rearranger.source_pixels.colors,
         source.get_size(),
-        LinearAnimationStrategy.new(),
-        3.0
+        GPUFlowFieldStrategy.new(),
+        15.0
     )
 
-    animator.strategy.export_frames_to_directory("user://animation_frames_2")
+    #animator.strategy.export_frames_to_directory("user://animation_frames_2")
 
     display.start_animation(animator)
 
