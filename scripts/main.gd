@@ -27,6 +27,8 @@ func _ready() -> void:
 		push_error("Failed to load images")
 		return
 
+	display.current_texture.set_image(source)
+
 	flow_field_panel.set_from_strategy()
 
 func morph() -> void:
@@ -42,7 +44,7 @@ func _rearrange() -> void:
 
 	
 func animate(strategy: GPUFlowFieldStrategy, duration: float) -> void:
-	if rearranger == null:
+	if not rearranger:
 		return
 	var animator: PixelAnimator = PixelAnimator.new(
 		rearranger.source_pixels.positions,
